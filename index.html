@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Мета-теги, стили и скрипты из исходного кода -->
+</head>
+<body onload="fetchServerList()">
+  <div class="animated-background"></div>
+  <div class="content">
+    <h1>Добро пожаловать!</h1>
+    <h2>Выберите одну из следующих опций:</h2>
+    <div class="button-container">
+<div id="server-list">
+  <h2>Список серверов:</h2>
+  <ul id="list">
+  </ul>
+</div>
+    </div>
+    <div id="server-list">
+      <h2>Список серверов:</h2>
+      <ul id="list">
+      </ul>
+    </div>
+  </div>
+  <script>
+async function fetchServerList() {
+  try {
+    const response = await fetch('https://your-master-server-url/api/servers');
+    const serverList = await response.json();
+
+    const list = document.getElementById('list');
+    list.innerHTML = '';
+
+    for (const server of serverList) {
+      const listItem = document.createElement('li');
+      listItem.textContent = `${server.name} (${server.ip}:${server.port})`;
+      listItem.onclick = () => {
+        alert(`Подключение к серверу: ${server.ip}:${server.port}`);
+      };
+      list.append(listItem);
+    }
+  } catch (error) {
+    console.error('Ошибка при получении списка серверов:', error);
+  }
+}
+  </script>
+<body onload="fetchServerList()">
+</body>
+</html>
